@@ -1,0 +1,132 @@
+/* ============================================================
+   Health Tech Founder Thesis — shared styles
+   House style: Georgia serif, hairline rules, no colour fills.
+   Edit colours in :root. Both pages share this file.
+   ============================================================ */
+
+:root{
+  --ink:#1d1b16;     /* primary text + hairlines */
+  --paper:#faf7f0;   /* page background */
+  --faint:#6f6a60;   /* secondary text */
+  --rule:#c9c2b4;    /* light dividers */
+}
+
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:Georgia,"Times New Roman",serif;
+  line-height:1.55;
+  font-size:17px;
+}
+a{color:var(--ink);}
+
+.wrap{max-width:880px;margin:0 auto;padding:0 28px 96px;}
+
+/* ---------- shared top nav ---------- */
+.nav{
+  max-width:880px;margin:0 auto;padding:24px 28px 16px;
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:18px;flex-wrap:wrap;
+  border-bottom:1.5px solid var(--ink);
+}
+.nav .brand{
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);
+}
+.nav .links{display:flex;gap:22px;}
+.nav .links a{
+  font-size:13px;letter-spacing:.04em;text-decoration:none;color:var(--faint);
+  padding-bottom:2px;
+}
+.nav .links a.is-active{color:var(--ink);border-bottom:1px solid var(--ink);}
+.nav .links a:hover{color:var(--ink);}
+
+/* ---------- masthead ---------- */
+.masthead{padding-top:42px;margin-bottom:8px;}
+.eyebrow{
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--faint);margin:0 0 10px;
+}
+h1{
+  font-size:34px;line-height:1.12;font-weight:normal;margin:0 0 12px;
+  letter-spacing:-.01em;
+}
+.standfirst{font-style:italic;font-size:18px;margin:0;max-width:62ch;}
+
+/* ---------- sections ---------- */
+section{margin-top:52px;}
+.sec-head{
+  display:flex;align-items:baseline;gap:14px;
+  border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:22px;
+}
+.sec-head .num{font-size:12px;letter-spacing:.18em;color:var(--faint);}
+.sec-head h2{font-size:20px;font-weight:normal;margin:0;letter-spacing:-.005em;}
+
+p{margin:0 0 18px;}
+.lede{font-size:19px;}
+strong{font-weight:bold;}
+em{font-style:italic;}
+
+.pull{
+  border-left:2px solid var(--ink);
+  padding:2px 0 2px 20px;margin:26px 0;
+  font-style:italic;font-size:19px;line-height:1.5;
+}
+
+/* ---------- moat table ---------- */
+.moat{width:100%;border-collapse:collapse;margin:4px 0 8px;}
+.moat td{border-top:1px solid var(--rule);padding:11px 0;vertical-align:top;font-size:15.5px;}
+.moat td:first-child{width:34%;font-style:italic;padding-right:18px;}
+
+/* ---------- numbered lists ---------- */
+ol.principles,ol.kills{list-style:none;counter-reset:item;margin:0;padding:0;}
+ol.principles>li,ol.kills>li{
+  counter-increment:item;position:relative;
+  padding:14px 0 14px 46px;border-top:1px solid var(--rule);
+}
+ol.principles>li:first-child,ol.kills>li:first-child{border-top:none;}
+ol.principles>li::before,ol.kills>li::before{
+  content:counter(item,decimal-leading-zero);
+  position:absolute;left:0;top:14px;
+  font-size:12px;letter-spacing:.1em;color:var(--faint);
+}
+.kills li b{font-variant:small-caps;letter-spacing:.03em;}
+
+/* ---------- map figure ---------- */
+figure{margin:8px 0 0;}
+.map{width:100%;height:auto;display:block;}
+figcaption{font-size:12.5px;color:var(--faint);margin-top:14px;font-style:italic;}
+
+/* SVG type */
+svg text{font-family:Georgia,"Times New Roman",serif;fill:var(--ink);}
+.n-title{font-size:14.5px;}
+.n-sub{font-size:11px;fill:var(--faint);}
+.n-now{font-size:15px;letter-spacing:.02em;}
+.n-found{font-size:16px;letter-spacing:.04em;}
+.edge{font-size:11px;font-style:italic;fill:var(--faint);}
+.band{font-size:12.5px;letter-spacing:.02em;}
+.band-lab{font-size:10px;letter-spacing:.18em;fill:var(--faint);}
+
+/* ---------- page foot ---------- */
+.foot{
+  margin-top:64px;border-top:1.5px solid var(--ink);padding-top:18px;
+  font-size:13px;color:var(--faint);font-style:italic;
+  display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
+}
+.foot a{text-decoration:none;font-style:normal;letter-spacing:.03em;}
+.foot a:hover{color:var(--ink);}
+
+@media (max-width:620px){
+  body{font-size:16px;}
+  h1{font-size:27px;}
+  .wrap{padding:0 20px 72px;}
+  .nav{padding:20px 20px 14px;}
+}
+@media print{
+  body{background:#fff;}
+  .nav .links{display:none;}
+  .wrap{max-width:none;padding:0;}
+  section{break-inside:avoid;}
+}
