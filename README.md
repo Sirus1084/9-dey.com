@@ -1,40 +1,46 @@
-# Health Tech Founder Thesis — site
+# 9-dey — Health Tech Founder Thesis (site)
 
-A two-page static site. No framework, no build step.
+A small static site. No framework, no build step. Auto-deploys from this
+GitHub repo to Cloudflare on every push to `main`.
 
-- `index.html` — the thesis (the bedrock)
-- `map.html` — the path map (flowchart, principles, kill signals)
-- `style.css` — shared house style (Georgia, hairline rules, no fills). Colours live in `:root` at the top.
+## Files
+- `index.html` — the **current** thesis (always lives here, dated in the masthead)
+- `thesis-YYYY-MM-DD.html` — frozen **archive** copies of past theses (created as you go)
+- `map.html` — the path map (universal, **not** versioned, no date)
+- `theses.js` — the version registry + dropdown (newest first)
+- `style.css` — shared house style (Georgia, hairline rules, monochrome). Colours in `:root`.
 
 ## Editing
+Plain HTML. Edit the text inside the relevant `<section>`. The map's flowchart is
+inline SVG in `map.html` — each box label is a `<text>` element. The thesis diagrams
+are inline SVG in `index.html` (search for `DIAGRAM A/B/C`).
 
-Everything is plain HTML. To change wording, edit the text inside the relevant
-`<section>`. The flowchart is inline SVG in `map.html` — each box's label is a
-`<text>` element you can edit directly; no graphics tool needed. If you move or
-resize a box, the box is the `<rect>`/`<polygon>` just above its `<text>`.
+Open any file in a browser to preview locally.
 
-Open either file in a browser to preview locally (double-click, or `open index.html`).
+## Adding a new thesis (the dropdown)
+The current thesis always lives at `index.html`. Older ones are frozen as dated files
+and listed in the Thesis dropdown. To add a new version (e.g. 1 Sep 2026):
 
-## Deploy to Cloudflare Pages
+1. **Archive the current one.** Copy `index.html` to `thesis-2026-06-24.html`
+   (use the date currently in index.html's masthead). In that new archive file,
+   set `<body data-thesis="thesis-2026-06-24.html">`.
+2. **Repoint the old entry** in `theses.js`: change its `file` from `"index.html"`
+   to `"thesis-2026-06-24.html"`.
+3. **Write the new thesis** into `index.html` — update the masthead date
+   (`<title>`, `.version`) and keep `<body data-thesis="index.html">`.
+4. **Add the new entry at the TOP** of the `THESES` list in `theses.js`:
+   `{ label: "1 September 2026", file: "index.html" },`
+5. `git push` — the live site updates automatically.
 
-### Option A — dashboard (no terminal)
-1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** → **Upload assets**.
-2. Drag this whole folder in. Set the project name. Deploy.
-3. You get a `*.pages.dev` URL immediately.
+Claude Code can do all five steps from one instruction, e.g.:
+*"Archive the current thesis and start a new one dated today — same content, but
+update section 04 to reflect what I've learned in consulting."*
 
-### Option B — Wrangler / Claude Code (recommended for ongoing edits)
-```bash
-npm install -g wrangler          # once
-wrangler login                   # once, opens browser
-wrangler pages deploy . --project-name=health-tech-thesis
-```
-Re-run the last line any time to push updates. This is the flow to drive from
-Claude Code: make the edit, then deploy.
+## Deploy
+Already wired: push to `main` → Cloudflare rebuilds → `9-dey.com` updates in a
+minute or two. Hard-refresh (Cmd+Shift+R) if you don't see a change immediately.
+Build status is under the Cloudflare project's **Deployments** tab.
 
-(Optional, for git-based auto-deploy: push this folder to a GitHub repo, then in
-Pages → **Connect to Git** → select the repo. Build command: none. Output dir: `/`.)
-
-## Custom domain (after you buy it)
-Pages project → **Custom domains** → **Set up a domain** → enter the domain →
-follow the DNS prompts. If the domain is registered at Cloudflare, it's automatic;
-if elsewhere, add the CNAME they give you.
+## Notes
+- The site is public; the code repo is private. That split is intentional.
+- The `section:has()` CSS needs a modern browser (fine for current Safari/Chrome/Firefox).
